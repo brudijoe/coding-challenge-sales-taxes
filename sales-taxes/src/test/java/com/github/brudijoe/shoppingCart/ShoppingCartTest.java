@@ -29,11 +29,13 @@ public class ShoppingCartTest {
 
     @Test
     public void testCalculateTotal() {
-        Item item1 = new Item("Item1", 10.0, false, false);
-        Item item2 = new Item("Item2", 20.0, false, false);
+        Item book = new Item("book", 12.49, false, true);
+        Item cd = new Item("music CD", 14.99, false, false);
+        Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
 
-        shoppingCart.addItem(item1);
-        shoppingCart.addItem(item2);
+        shoppingCart.addItem(book);
+        shoppingCart.addItem(cd);
+        shoppingCart.addItem(chocolateBar);
 
         assertEquals(29.83, shoppingCart.calculateTotal(shoppingCart.getItems()));
     }
