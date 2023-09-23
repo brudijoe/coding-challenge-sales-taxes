@@ -4,7 +4,7 @@ package com.github.brudijoe;
  * Hello world!
  *
  */
-public class App 
+public class SalesTaxApplication 
 {
     public static void main( String[] args )
     {
