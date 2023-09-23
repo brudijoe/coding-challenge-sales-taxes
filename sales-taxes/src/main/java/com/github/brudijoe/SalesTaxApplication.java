@@ -1,13 +1,9 @@
 package com.github.brudijoe;
 
-/**
- * Hello world!
- *
- */
-public class SalesTaxApplication 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import com.github.brudijoe.shoppingCart.ShoppingCart;
+
+public class SalesTaxApplication {
+    public static void main(String[] args) {
+        ShoppingCart shoppingCart = new ShoppingCart();
     }
 }

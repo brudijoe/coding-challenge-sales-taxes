@@ -28,14 +28,6 @@ public class ShoppingCart {
         total = totalWithoutSalesTaxes + salesTaxes;
     }
 
-    public double getTotalWithoutSalesTaxes() {
-        return totalWithoutSalesTaxes;
-    }
-
-    public double getSalesTaxes() {
-        return salesTaxes;
-    }
-
     public double getTotal() {
         return total;
     }
