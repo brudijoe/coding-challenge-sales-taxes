@@ -39,7 +39,12 @@ public class ShoppingCart {
 
     public double calculateTotal(ArrayList<Item> arrayList) {
         double total = 0;
-        return total;
+        for (Item item : arrayList) {
+            double price = item.getPrice();
+            int quantity = item.getQuantity();
+            total += price * quantity;
+        }
+        return Math.round(total * 100.0) / 100.0;
     }
 
     public double calculateSalesTaxes(ArrayList<Item> arrayList) {

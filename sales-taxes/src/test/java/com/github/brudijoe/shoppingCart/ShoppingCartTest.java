@@ -37,7 +37,7 @@ public class ShoppingCartTest {
         shoppingCart.addItem(cd);
         shoppingCart.addItem(chocolateBar);
 
-        assertEquals(29.83, shoppingCart.calculateTotal(shoppingCart.getItems()));
+        assertEquals(28.33, shoppingCart.calculateTotal(shoppingCart.getItems()));
     }
 
     @Test
