@@ -40,4 +40,17 @@ public class ShoppingCartTest {
         assertEquals(29.83, shoppingCart.calculateTotal(shoppingCart.getItems()));
     }
 
+    @Test
+    public void testCalculateSalesTaxes() {
+        Item book = new Item("book", 12.49, false, true);
+        Item cd = new Item("music CD", 14.99, false, false);
+        Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+
+        shoppingCart.addItem(book);
+        shoppingCart.addItem(cd);
+        shoppingCart.addItem(chocolateBar);
+
+        assertEquals(1.50, shoppingCart.calculateSalesTaxes(shoppingCart.getItems()));
+    }
+
 }
