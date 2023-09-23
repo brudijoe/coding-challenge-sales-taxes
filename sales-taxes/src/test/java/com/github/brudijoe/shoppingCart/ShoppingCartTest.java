@@ -9,48 +9,93 @@ import com.github.brudijoe.item.Item;
 
 public class ShoppingCartTest {
 
-    ShoppingCart shoppingCart;
+    ShoppingCart shoppingCart1;
+    ShoppingCart shoppingCart2;
+    ShoppingCart shoppingCart3;
 
     @BeforeEach
     public void setUp() {
-        shoppingCart = new ShoppingCart();
+        shoppingCart1 = new ShoppingCart();
+        shoppingCart2 = new ShoppingCart();
+        shoppingCart3 = new ShoppingCart();
+    }
+
+    private void initializeShoppingCartWithTestDataOne() {
+        Item book = new Item("Book", 12.49, false, true);
+        Item cd = new Item("Music CD", 14.99, false, false);
+        Item chocolateBar = new Item("Chocolate bar", 0.85, false, true);
+
+        shoppingCart1.addItem(book);
+        shoppingCart1.addItem(cd);
+        shoppingCart1.addItem(chocolateBar);
+    }
+
+    private void initializeShoppingCartWithTestDataTwo() {
+        Item importedBoxOfChocolates = new Item("Box of chocolates", 10.00, true, true);
+        Item importedBottleOfPerfume = new Item("Bottle of perfume", 47.50, true, false);
+
+        shoppingCart2.addItem(importedBoxOfChocolates);
+        shoppingCart2.addItem(importedBottleOfPerfume);
+    }
+
+    private void initializeShoppingCartWithTestDataThree() {
+        Item importedBottleOfPerfume = new Item("Bottle of perfume", 27.99, true, false);
+        Item bottleOfPerfume = new Item("Bottle of perfume", 18.99, false, false);
+        Item packetOfHeadachePills = new Item("Packet of headache pills", 9.75, false, true);
+        Item importedBoxOfChocolates = new Item("Box of chocolates", 11.25, true, true);
+
+        shoppingCart3.addItem(importedBottleOfPerfume);
+        shoppingCart3.addItem(bottleOfPerfume);
+        shoppingCart3.addItem(packetOfHeadachePills);
+        shoppingCart3.addItem(importedBoxOfChocolates);
     }
 
     @Test
-    public void testAddItem() {
-        Item item1 = new Item("Item1", 10.0, false, false);
-        Item item2 = new Item("Item2", 20.0, false, false);
+    public void testAddItems() {
+        initializeShoppingCartWithTestDataOne();
+        assertEquals(3, shoppingCart1.getItems().size());
 
-        shoppingCart.addItem(item1);
-        shoppingCart.addItem(item2);
+        initializeShoppingCartWithTestDataTwo();
+        assertEquals(2, shoppingCart2.getItems().size());
 
-        assertEquals(2, shoppingCart.getItems().size());
+        initializeShoppingCartWithTestDataThree();
+        assertEquals(4, shoppingCart3.getItems().size());
     }
 
     @Test
     public void testCalculateTotalWithoutSalesTaxes() {
-        Item book = new Item("book", 12.49, false, true);
-        Item cd = new Item("music CD", 14.99, false, false);
-        Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+        initializeShoppingCartWithTestDataOne();
+        assertEquals(28.33, shoppingCart1.calculateTotalWithoutSalesTaxes(shoppingCart1.getItems()));
 
-        shoppingCart.addItem(book);
-        shoppingCart.addItem(cd);
-        shoppingCart.addItem(chocolateBar);
+        initializeShoppingCartWithTestDataTwo();
+        assertEquals(57.50, shoppingCart2.calculateTotalWithoutSalesTaxes(shoppingCart2.getItems()));
 
-        assertEquals(28.33, shoppingCart.calculateTotalWithoutSalesTaxes(shoppingCart.getItems()));
+        initializeShoppingCartWithTestDataThree();
+        assertEquals(67.98, shoppingCart3.calculateTotalWithoutSalesTaxes(shoppingCart3.getItems()));
     }
 
     @Test
     public void testCalculateSalesTaxes() {
-        Item book = new Item("book", 12.49, false, true);
-        Item cd = new Item("music CD", 14.99, false, false);
-        Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
+        initializeShoppingCartWithTestDataOne();
+        assertEquals(1.50, shoppingCart1.calculateSalesTaxes(shoppingCart1.getItems()));
 
-        shoppingCart.addItem(book);
-        shoppingCart.addItem(cd);
-        shoppingCart.addItem(chocolateBar);
+        initializeShoppingCartWithTestDataTwo();
+        assertEquals(7.65, shoppingCart2.calculateSalesTaxes(shoppingCart2.getItems()));
 
-        assertEquals(1.50, shoppingCart.calculateSalesTaxes(shoppingCart.getItems()));
+        initializeShoppingCartWithTestDataThree();
+        assertEquals(6.70, shoppingCart3.calculateSalesTaxes(shoppingCart3.getItems()));
+    }
+
+    @Test
+    public void testGetTotal() {
+        initializeShoppingCartWithTestDataOne();
+        assertEquals(29.83, shoppingCart1.getTotal());
+
+        initializeShoppingCartWithTestDataTwo();
+        assertEquals(65.15, shoppingCart2.getTotal());
+
+        initializeShoppingCartWithTestDataThree();
+        assertEquals(74.68, shoppingCart3.getTotal());
     }
 
 }

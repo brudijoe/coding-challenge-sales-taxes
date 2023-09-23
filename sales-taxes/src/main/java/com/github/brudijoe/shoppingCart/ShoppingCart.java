@@ -6,13 +6,15 @@ import com.github.brudijoe.item.Item;
 
 public class ShoppingCart {
     private ArrayList<Item> items;
-    private double total;
+    private double totalWithoutSalesTaxes;
     private double salesTaxes;
+    private double total;
 
     public ShoppingCart() {
         items = new ArrayList<>();
-        total = 0;
+        totalWithoutSalesTaxes = 0;
         salesTaxes = 0;
+        total = 0;
     }
 
     public void addItem(Item item) {
@@ -21,16 +23,21 @@ public class ShoppingCart {
     }
 
     private void updateCart(ArrayList<Item> arrayList) {
-        total = calculateTotalWithoutSalesTaxes(arrayList);
+        totalWithoutSalesTaxes = calculateTotalWithoutSalesTaxes(arrayList);
         salesTaxes = calculateSalesTaxes(arrayList);
+        total = totalWithoutSalesTaxes + salesTaxes;
     }
 
-    public double getTotal() {
-        return total;
+    public double getTotalWithoutSalesTaxes() {
+        return totalWithoutSalesTaxes;
     }
 
     public double getSalesTaxes() {
         return salesTaxes;
+    }
+
+    public double getTotal() {
+        return total;
     }
 
     public ArrayList<Item> getItems() {
@@ -38,11 +45,11 @@ public class ShoppingCart {
     }
 
     public double calculateTotalWithoutSalesTaxes(ArrayList<Item> arrayList) {
-        double total = 0;
+        double totalWithoutSalesTaxes = 0;
         for (Item item : arrayList) {
-            total += item.getPrice() * item.getQuantity();
+            totalWithoutSalesTaxes += item.getPrice() * item.getQuantity();
         }
-        return Math.round(total * 100.0) / 100.0;
+        return Math.round(totalWithoutSalesTaxes * 100.0) / 100.0;
     }
 
     public double calculateSalesTaxes(ArrayList<Item> arrayList) {
