@@ -49,6 +49,13 @@ public class ShoppingCart {
 
     public double calculateSalesTaxes(ArrayList<Item> arrayList) {
         double salesTaxes = 0;
-        return salesTaxes;
+        for (Item item : arrayList) {
+            double taxRate = 0 + (item.isImported() ? 5 : 0) + (item.isExemptFromTaxes() ? 0 : 10);
+            double price = item.getPrice();
+            int quantity = item.getQuantity();
+            double toBeRounded = (taxRate * price * quantity) / 100;
+            salesTaxes += toBeRounded;
+        }
+        return Math.ceil((salesTaxes) * 20.0) / 20.0;
     }
 }
