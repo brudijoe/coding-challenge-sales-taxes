@@ -21,7 +21,7 @@ public class ShoppingCart {
     }
 
     private void updateCart(ArrayList<Item> arrayList) {
-        total = calculateTotal(arrayList);
+        total = calculateTotalWithoutSalesTaxes(arrayList);
         salesTaxes = calculateSalesTaxes(arrayList);
     }
 
@@ -37,7 +37,7 @@ public class ShoppingCart {
         return items;
     }
 
-    public double calculateTotal(ArrayList<Item> arrayList) {
+    public double calculateTotalWithoutSalesTaxes(ArrayList<Item> arrayList) {
         double total = 0;
         for (Item item : arrayList) {
             double price = item.getPrice();

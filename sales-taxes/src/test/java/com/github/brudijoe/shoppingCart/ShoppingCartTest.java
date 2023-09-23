@@ -28,7 +28,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void testCalculateTotal() {
+    public void testCalculateTotalWithoutSalesTaxes() {
         Item book = new Item("book", 12.49, false, true);
         Item cd = new Item("music CD", 14.99, false, false);
         Item chocolateBar = new Item("chocolate bar", 0.85, false, true);
@@ -37,7 +37,7 @@ public class ShoppingCartTest {
         shoppingCart.addItem(cd);
         shoppingCart.addItem(chocolateBar);
 
-        assertEquals(28.33, shoppingCart.calculateTotal(shoppingCart.getItems()));
+        assertEquals(28.33, shoppingCart.calculateTotalWithoutSalesTaxes(shoppingCart.getItems()));
     }
 
     @Test
