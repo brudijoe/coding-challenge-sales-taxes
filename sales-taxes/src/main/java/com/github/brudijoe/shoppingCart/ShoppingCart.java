@@ -33,6 +33,10 @@ public class ShoppingCart {
         return salesTaxes;
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
     public double calculateTotal(ArrayList<Item> arrayList) {
         double total = 0;
         return total;
