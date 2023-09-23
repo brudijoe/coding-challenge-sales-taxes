@@ -1,20 +1,12 @@
 package com.github.brudijoe;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+public class SalesTaxApplicationTest {
 
-/**
- * Unit test for simple App.
- */
-public class SalesTaxApplicationTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() {
+        assertTrue(true);
     }
 }
