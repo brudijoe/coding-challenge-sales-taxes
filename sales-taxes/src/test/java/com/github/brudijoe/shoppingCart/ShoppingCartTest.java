@@ -107,6 +107,7 @@ public class ShoppingCartTest {
 
     @Test
     public void printShoppingCartReceipt() {
+        initializeShoppingCartWithTestDataOne();
         shoppingCart1.printShoppingCartReceipt();
         assertEquals("1 Book: 12.49\r\n1 Music CD: 14.99\r\n1 Chocolate bar: 0.85\r\nSales Taxes: 1.50\r\nTotal: 29.83",
                 outputStreamCaptor.toString().trim());
