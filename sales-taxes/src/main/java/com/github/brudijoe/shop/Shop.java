@@ -32,6 +32,10 @@ public class Shop {
         categories.add(drugstoreCategory);
     }
 
+    public List<ItemCategory> getCategories() {
+        return this.categories;
+    }
+
     private ItemCategory createFoodCategory() {
         ItemCategory foodCategory = new ItemCategory("Food");
         foodCategory.addItem(new Item("Chocolate Bar", 0.85, false, true));
