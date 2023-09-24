@@ -7,7 +7,7 @@
 
   <groupId>com.github.brudijoe</groupId>
   <artifactId>sales-taxes</artifactId>
-  <version>0.1</version>
+  <version>1.0</version>
   <name>sales-taxes</name>
 
   <properties>
@@ -56,8 +56,18 @@
         <version>2.22.1</version>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.0.2</version>
+        <version>3.1.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>com.github.brudijoe.SalesTaxApplication</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-install-plugin</artifactId>

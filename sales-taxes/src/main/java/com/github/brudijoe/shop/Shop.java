@@ -9,6 +9,9 @@ import java.util.Locale;
 import com.github.brudijoe.item.Item;
 import com.github.brudijoe.item.ItemCategory;
 
+/**
+ * Represents a shop that contains categories of items available for purchase.
+ */
 public class Shop {
 
     private List<ItemCategory> categories;
@@ -80,6 +83,12 @@ public class Shop {
         return categories.get(categoryIndex).getItems();
     }
 
+    
+    /**
+     * Prints the items in a specified item category along with their names and prices.
+     *
+     * @param categoryIndex The index of the category.
+     */
     public void printItemsInCategory(int categoryIndex) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat df = new DecimalFormat("0.00", symbols);
