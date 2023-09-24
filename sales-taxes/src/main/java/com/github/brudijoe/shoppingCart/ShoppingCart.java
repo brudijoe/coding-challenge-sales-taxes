@@ -53,4 +53,8 @@ public class ShoppingCart {
         }
         return Math.ceil((salesTaxes) * 20.0) / 20.0;
     }
+
+    public void printShoppingCartReceipt() {
+        System.out.println("Receipt");
+    }
 }

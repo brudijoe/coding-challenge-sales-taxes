@@ -2,12 +2,18 @@ package com.github.brudijoe.shoppingCart;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.github.brudijoe.item.Item;
 
 public class ShoppingCartTest {
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     ShoppingCart shoppingCart1;
     ShoppingCart shoppingCart2;
@@ -18,6 +24,7 @@ public class ShoppingCartTest {
         shoppingCart1 = new ShoppingCart();
         shoppingCart2 = new ShoppingCart();
         shoppingCart3 = new ShoppingCart();
+        System.setOut(new PrintStream(outputStreamCaptor));
     }
 
     private void initializeShoppingCartWithTestDataOne() {
@@ -96,6 +103,18 @@ public class ShoppingCartTest {
 
         initializeShoppingCartWithTestDataThree();
         assertEquals(74.68, shoppingCart3.getTotal());
+    }
+
+    @Test
+    public void printShoppingCartReceipt() {
+        shoppingCart1.printShoppingCartReceipt();
+        assertEquals("1 Book: 12.49\r\n1 Music CD: 14.99\r\n1 Chocolate bar: 0.85\r\nSales Taxes: 1.50\r\nTotal: 29.83",
+                outputStreamCaptor.toString().trim());
+    }
+
+    @AfterEach
+    public void tearDown() {
+        System.setOut(standardOut);
     }
 
 }
