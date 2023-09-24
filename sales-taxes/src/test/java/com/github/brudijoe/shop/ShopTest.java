@@ -2,30 +2,32 @@ package com.github.brudijoe.shop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.github.brudijoe.item.Item;
 
 public class ShopTest {
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private Shop shop;
 
     @BeforeEach
     public void setUp() {
         shop = new Shop();
+        System.setOut(new PrintStream(outputStreamCaptor));
     }
 
     @Test
-    public void testGetCategoryNames() {
-        List<String> categoryNames = shop.getCategoryNames();
-        assertEquals(5, categoryNames.size());
-        assertEquals("(1) Food", categoryNames.get(0));
-        assertEquals("(2) Medicine", categoryNames.get(1));
-        assertEquals("(3) Books", categoryNames.get(2));
-        assertEquals("(4) Music", categoryNames.get(3));
-        assertEquals("(5) Drugstore", categoryNames.get(4));
+    public void testPrintCategoryNames() {
+        shop.printCategoryNames();
+        assertEquals("(1) Food\r\n(2) Medicine\r\n(3) Books\r\n(4) Music\r\n(5) Drugstore",
+                outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -52,5 +54,10 @@ public class ShopTest {
         assertEquals(2, drugstoreItems.size());
         assertEquals("Bottle of Perfume", drugstoreItems.get(0).getName());
         assertEquals("Bottle of Perfume", drugstoreItems.get(1).getName());
+    }
+
+    @AfterEach
+    public void tearDown() {
+        System.setOut(standardOut);
     }
 }

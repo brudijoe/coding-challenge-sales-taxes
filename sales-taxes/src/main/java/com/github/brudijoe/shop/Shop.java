@@ -62,16 +62,23 @@ public class Shop {
         return drugstoreCategory;
     }
 
-    public List<String> getCategoryNames() {
-        List<String> categoryNames = new ArrayList<>();
+    public void printCategoryNames() {
         for (int i = 0; i < categories.size(); i++) {
-            String categoryName = categories.get(i).getCategoryName();
-            categoryNames.add("(" + (i + 1) + ") " + categoryName);
+            ItemCategory category = categories.get(i);
+            System.out.println("(" + (i + 1) + ") " + category.getCategoryName());
         }
-        return categoryNames;
     }
 
     public List<Item> getItemsInCategory(int categoryIndex) {
         return categories.get(categoryIndex).getItems();
+    }
+
+    public void printItemsInCategory(int categoryIndex) {
+        for (int i = 0; i < categories.get(categoryIndex).getItems().size(); i++) {
+            System.out.println(
+                    "(" + (categories.indexOf(categories.get(i)) + 1) + ") "
+                            + categories.get(categoryIndex).getItems().get(i).getName() + ": "
+                            + categories.get(categoryIndex).getItems().get(i).getPrice());
+        }
     }
 }
