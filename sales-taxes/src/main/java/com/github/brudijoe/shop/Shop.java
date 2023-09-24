@@ -19,12 +19,14 @@ public class Shop {
         ItemCategory foodCategory = createFoodCategory();
         ItemCategory medicineCategory = createMedicineCategory();
         ItemCategory bookCategory = createBookCategory();
-        ItemCategory products = createUncategorizedProducts();
+        ItemCategory musicCategory = createMusicCategory();
+        ItemCategory drugstoreCategory = createDrugstoreCategory();
 
         categories.add(foodCategory);
         categories.add(medicineCategory);
         categories.add(bookCategory);
-        categories.add(products);
+        categories.add(musicCategory);
+        categories.add(drugstoreCategory);
     }
 
     private ItemCategory createFoodCategory() {
@@ -47,12 +49,17 @@ public class Shop {
         return bookCategory;
     }
 
-    private ItemCategory createUncategorizedProducts() {
-        ItemCategory products = new ItemCategory("Uncategorized Products");
-        products.addItem(new Item("Music CD", 14.99, false, false));
-        products.addItem(new Item("Bottle of Perfume", 27.99, true, false));
-        products.addItem(new Item("Bottle of Perfume", 47.50, true, false));
-        return products;
+    private ItemCategory createMusicCategory() {
+        ItemCategory musicCategory = new ItemCategory("Music");
+        musicCategory.addItem(new Item("Music CD", 14.99, false, false));
+        return musicCategory;
+    }
+
+    private ItemCategory createDrugstoreCategory() {
+        ItemCategory drugstoreCategory = new ItemCategory("Drugstore");
+        drugstoreCategory.addItem(new Item("Bottle of Perfume", 27.99, true, false));
+        drugstoreCategory.addItem(new Item("Bottle of Perfume", 47.50, true, false));
+        return drugstoreCategory;
     }
 
     public List<String> getCategoryNames() {
