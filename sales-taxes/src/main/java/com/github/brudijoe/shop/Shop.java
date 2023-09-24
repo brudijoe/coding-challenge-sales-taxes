@@ -1,7 +1,10 @@
 package com.github.brudijoe.shop;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.github.brudijoe.item.Item;
 import com.github.brudijoe.item.ItemCategory;
@@ -74,11 +77,14 @@ public class Shop {
     }
 
     public void printItemsInCategory(int categoryIndex) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.00", symbols);
+
         for (int i = 0; i < categories.get(categoryIndex).getItems().size(); i++) {
             System.out.println(
                     "(" + (categories.indexOf(categories.get(i)) + 1) + ") "
                             + categories.get(categoryIndex).getItems().get(i).getName() + ": "
-                            + categories.get(categoryIndex).getItems().get(i).getPrice());
+                            + df.format(categories.get(categoryIndex).getItems().get(i).getPrice()));
         }
     }
 }
