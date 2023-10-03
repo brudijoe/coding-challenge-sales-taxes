@@ -1,13 +1,15 @@
 package com.github.brudijoe.item;
 
 public class Item {
+    private int quantity = 1;
     private String name;
     private double price;
     private boolean imported;
     private boolean exemptFromTaxes;
-    private int quantity = 1;
 
-    public Item(String name, double price, boolean imported, boolean exemptFromTaxes) {
+    public Item(int quantity, String name, double price, boolean imported,
+            boolean exemptFromTaxes) {
+        this.quantity = quantity;
         this.name = name;
         this.price = price;
         this.imported = imported;
@@ -56,13 +58,9 @@ public class Item {
 
     @Override
     public String toString() {
-        return "{" +
-                " name='" + getName() + "'" +
-                ", price='" + getPrice() + "'" +
-                ", imported='" + isImported() + "'" +
-                ", exemptFromTaxes='" + isExemptFromTaxes() + "'" +
-                ", quantity='" + getQuantity() + "'" +
-                "}";
+        return "{" + " name='" + getName() + "'" + ", price='" + getPrice() + "'" + ", imported='"
+                + isImported() + "'" + ", exemptFromTaxes='" + isExemptFromTaxes() + "'"
+                + ", quantity='" + getQuantity() + "'" + "}";
     }
 
 }

@@ -28,9 +28,9 @@ public class ShoppingCartTest {
     }
 
     private void initializeShoppingCartWithTestDataOne() {
-        Item book = new Item("Book", 12.49, false, true);
-        Item cd = new Item("Music CD", 14.99, false, false);
-        Item chocolateBar = new Item("Chocolate bar", 0.85, false, true);
+        Item book = new Item(1, "Book", 12.49, false, true);
+        Item cd = new Item(1, "Music CD", 14.99, false, false);
+        Item chocolateBar = new Item(1, "Chocolate bar", 0.85, false, true);
 
         shoppingCart1.addItem(book);
         shoppingCart1.addItem(cd);
@@ -38,18 +38,18 @@ public class ShoppingCartTest {
     }
 
     private void initializeShoppingCartWithTestDataTwo() {
-        Item importedBoxOfChocolates = new Item("Box of chocolates", 10.00, true, true);
-        Item importedBottleOfPerfume = new Item("Bottle of perfume", 47.50, true, false);
+        Item importedBoxOfChocolates = new Item(1, "Box of chocolates", 10.00, true, true);
+        Item importedBottleOfPerfume = new Item(1, "Bottle of perfume", 47.50, true, false);
 
         shoppingCart2.addItem(importedBoxOfChocolates);
         shoppingCart2.addItem(importedBottleOfPerfume);
     }
 
     private void initializeShoppingCartWithTestDataThree() {
-        Item importedBottleOfPerfume = new Item("Bottle of perfume", 27.99, true, false);
-        Item bottleOfPerfume = new Item("Bottle of perfume", 18.99, false, false);
-        Item packetOfHeadachePills = new Item("Packet of headache pills", 9.75, false, true);
-        Item importedBoxOfChocolates = new Item("Box of chocolates", 11.25, true, true);
+        Item importedBottleOfPerfume = new Item(1, "Bottle of perfume", 27.99, true, false);
+        Item bottleOfPerfume = new Item(1, "Bottle of perfume", 18.99, false, false);
+        Item packetOfHeadachePills = new Item(1, "Packet of headache pills", 9.75, false, true);
+        Item importedBoxOfChocolates = new Item(1, "Box of chocolates", 11.25, true, true);
 
         shoppingCart3.addItem(importedBottleOfPerfume);
         shoppingCart3.addItem(bottleOfPerfume);
@@ -72,13 +72,16 @@ public class ShoppingCartTest {
     @Test
     public void testCalculateTotalWithoutSalesTaxes() {
         initializeShoppingCartWithTestDataOne();
-        assertEquals(28.33, shoppingCart1.calculateTotalWithoutSalesTaxes(shoppingCart1.getItems()));
+        assertEquals(28.33,
+                shoppingCart1.calculateTotalWithoutSalesTaxes(shoppingCart1.getItems()));
 
         initializeShoppingCartWithTestDataTwo();
-        assertEquals(57.50, shoppingCart2.calculateTotalWithoutSalesTaxes(shoppingCart2.getItems()));
+        assertEquals(57.50,
+                shoppingCart2.calculateTotalWithoutSalesTaxes(shoppingCart2.getItems()));
 
         initializeShoppingCartWithTestDataThree();
-        assertEquals(67.98, shoppingCart3.calculateTotalWithoutSalesTaxes(shoppingCart3.getItems()));
+        assertEquals(67.98,
+                shoppingCart3.calculateTotalWithoutSalesTaxes(shoppingCart3.getItems()));
     }
 
     @Test
@@ -109,7 +112,8 @@ public class ShoppingCartTest {
     public void printShoppingCartReceipt() {
         initializeShoppingCartWithTestDataOne();
         shoppingCart1.printShoppingCartReceipt();
-        assertEquals("1 Book: 12.49\r\n1 Music CD: 14.99\r\n1 Chocolate bar: 0.85\r\nSales Taxes: 1.50\r\nTotal: 29.83",
+        assertEquals(
+                "1 Book: 12.49\r\n1 Music CD: 14.99\r\n1 Chocolate bar: 0.85\r\nSales Taxes: 1.50\r\nTotal: 29.83",
                 outputStreamCaptor.toString().trim());
     }
 
