@@ -8,8 +8,8 @@ import java.util.Locale;
 import com.github.brudijoe.item.Item;
 
 /**
- * Represents a shopping cart that can hold items and calculate the total cost,
- * including sales taxes, of the items in the cart.
+ * Represents a shopping cart that can hold items and calculate the total cost, including sales
+ * taxes, of the items in the cart.
  */
 public class ShoppingCart {
     private ArrayList<Item> items;
@@ -74,16 +74,16 @@ public class ShoppingCart {
     }
 
     /**
-     * Prints a receipt for the items in the shopping cart, including quantities,
-     * item names, prices, sales taxes, and the total cost.
+     * Prints a receipt for the items in the shopping cart, including quantities, item names,
+     * prices, sales taxes, and the total cost.
      */
     public void printShoppingCartReceipt() {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat df = new DecimalFormat("0.00", symbols);
 
         for (Item item : items) {
-            System.out.println(
-                    item.getQuantity() + " " + item.getName() + ": " + df.format(item.getPrice()));
+            System.out.println(item.getQuantity() + " " + (item.isImported() ? "imported " : "")
+                    + item.getName() + ": " + df.format(item.getPrice()));
         }
         System.out.println("Sales Taxes: " + df.format(salesTaxes));
         System.out.println("Total: " + (df.format(total)));

@@ -13,15 +13,29 @@ public class SalesTaxApplication {
         ShoppingCart shoppingCart = new ShoppingCart();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to the shop, select numbers to operate the shop.");
-        String input = "1 imported book at 12.49";
+        System.out.println("Welcome to the shop!");
 
-        Item newItem = parseInput(input);
-        if (newItem != null) {
-            shoppingCart.addItem(newItem);
-            shoppingCart.printShoppingCartReceipt();
-        } else {
-            System.out.println("Input does not match the expected format.");
+        boolean buying = true;
+        while (buying) {
+
+            System.out.println("Please type what you like to buy e.g. '1 imported book at 12.49'");
+
+            String input = scanner.nextLine();
+            System.out.println();
+
+            Item newItem = parseInput(input);
+            if (newItem != null) {
+                shoppingCart.addItem(newItem);
+                shoppingCart.printShoppingCartReceipt();
+            } else {
+                System.out.println("Input does not match the expected format.");
+            }
+
+            System.out.println("\nWould you like to buy another item? (yes/no)");
+            String response = scanner.nextLine();
+            if (response.equals("no")) {
+                buying = false;
+            }
         }
 
         scanner.close();
