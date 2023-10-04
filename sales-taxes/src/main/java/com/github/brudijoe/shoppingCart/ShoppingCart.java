@@ -81,19 +81,6 @@ public class ShoppingCart {
     }
 
     /**
-     * Returns the taxrate, dependent on booleans from item.
-     * 
-     * 0% Taxrate on food, medicine and books. 10% Taxrate on normal goods. 5% Taxrate on imported
-     * goods, no exceptions.
-     * 
-     * @param item The current item.
-     * @return The taxrate.
-     */
-    public int determineTaxRate(Item item) {
-        return 0 + (item.isImported() ? 5 : 0) + (item.isExemptFromTaxes() ? 0 : 10);
-    }
-
-    /**
      * Calculates the taxrate, dependent on item quanitiy and price.
      * 
      * @param taxRate The current taxrate for the current item.
@@ -114,7 +101,7 @@ public class ShoppingCart {
     public BigDecimal calculateSalesTaxes(ArrayList<Item> arrayList) {
         BigDecimal salesTaxes = BigDecimal.ZERO;
         for (Item item : arrayList) {
-            int taxRate = determineTaxRate(item);
+            int taxRate = item.getTaxRate();
             BigDecimal salesTax = calculateSalesTax(taxRate, item);
             salesTaxes = salesTaxes.add(roundSalesTax(salesTax));
         }
@@ -130,8 +117,9 @@ public class ShoppingCart {
         DecimalFormat df = new DecimalFormat("0.00", symbols);
 
         for (Item item : items) {
-            System.out.println(item.getQuantity() + " " + (item.isImported() ? "imported " : "")
-                    + item.getName() + ": " + df.format(item.getPrice()));
+            System.out
+                    .println(item.getQuantity() + " " + (item.getTaxRate() == 5 ? "imported " : "")
+                            + item.getName() + ": " + df.format(item.getPrice()));
         }
         System.out.println("Sales Taxes: " + df.format(salesTaxes));
         System.out.println("Total: " + (df.format(total)));

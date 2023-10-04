@@ -38,25 +38,21 @@ public class InputParser {
             exemptFromTaxes.add("packet of headache pills");
 
             String itemName = "";
-            boolean isImported = false;
-            boolean exemptFromTaxesBoolean = false;
-
-            if (itemDescription.contains("imported")) {
-                isImported = true;
-            }
+            int taxRate = 0;
 
             for (String patternStr : itemRegexPatterns) {
                 if (itemDescription.contains(patternStr)) {
                     itemName = patternStr;
-                    if (exemptFromTaxes.contains(itemName)) {
-                        exemptFromTaxesBoolean = true;
-                    }
+                    taxRate = exemptFromTaxes.contains(itemName) ? 0 : 10;
                     break;
                 }
             }
 
-            return new Item(quantity, itemName, BigDecimal.valueOf(itemPrice), isImported,
-                    exemptFromTaxesBoolean);
+            if (itemDescription.contains("imported")) {
+                taxRate += 5;
+            }
+
+            return new Item(quantity, itemName, BigDecimal.valueOf(itemPrice), taxRate);
         }
 
         return null;
