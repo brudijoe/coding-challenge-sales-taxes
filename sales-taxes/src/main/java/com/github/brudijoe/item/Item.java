@@ -1,13 +1,15 @@
 package com.github.brudijoe.item;
 
+import java.math.BigDecimal;
+
 public class Item {
     private int quantity = 1;
     private String name;
-    private double price;
+    private BigDecimal price;
     private boolean imported;
     private boolean exemptFromTaxes;
 
-    public Item(int quantity, String name, double price, boolean imported,
+    public Item(int quantity, String name, BigDecimal price, boolean imported,
             boolean exemptFromTaxes) {
         this.quantity = quantity;
         this.name = name;
@@ -24,11 +26,11 @@ public class Item {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return this.price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

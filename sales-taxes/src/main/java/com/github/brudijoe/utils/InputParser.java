@@ -1,7 +1,7 @@
 package com.github.brudijoe.utils;
 
 import com.github.brudijoe.item.Item;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,7 +55,8 @@ public class InputParser {
                 }
             }
 
-            return new Item(quantity, itemName, itemPrice, isImported, exemptFromTaxesBoolean);
+            return new Item(quantity, itemName, BigDecimal.valueOf(itemPrice), isImported,
+                    exemptFromTaxesBoolean);
         }
 
         return null;

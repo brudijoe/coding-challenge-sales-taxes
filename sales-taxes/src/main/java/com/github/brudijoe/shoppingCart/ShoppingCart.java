@@ -1,5 +1,7 @@
 package com.github.brudijoe.shoppingCart;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -13,15 +15,15 @@ import com.github.brudijoe.item.Item;
  */
 public class ShoppingCart {
     private ArrayList<Item> items;
-    private double totalWithoutSalesTaxes;
-    private double salesTaxes;
-    private double total;
+    private BigDecimal totalWithoutSalesTaxes;
+    private BigDecimal salesTaxes;
+    private BigDecimal total;
 
     public ShoppingCart() {
         items = new ArrayList<>();
-        totalWithoutSalesTaxes = 0;
-        salesTaxes = 0;
-        total = 0;
+        totalWithoutSalesTaxes = BigDecimal.ZERO;
+        salesTaxes = BigDecimal.ZERO;
+        total = BigDecimal.ZERO;
     }
 
     public void addItem(Item item) {
@@ -32,10 +34,10 @@ public class ShoppingCart {
     private void updateCart(ArrayList<Item> arrayList) {
         totalWithoutSalesTaxes = calculateTotalWithoutSalesTaxes(arrayList);
         salesTaxes = calculateSalesTaxes(arrayList);
-        total = totalWithoutSalesTaxes + salesTaxes;
+        total = totalWithoutSalesTaxes.add(salesTaxes);
     }
 
-    public double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
@@ -44,10 +46,10 @@ public class ShoppingCart {
     }
 
     /*
-     * Round to 2 decimal places.
+     * Round up to 2 decimal places.
      */
-    public double roundTotalWithoutSalesTaxes(double totalWithoutSalesTaxes) {
-        return Math.round(totalWithoutSalesTaxes * 100.0) / 100.0;
+    public BigDecimal roundTotalWithoutSalesTaxes(BigDecimal totalWithoutSalesTaxes) {
+        return totalWithoutSalesTaxes.setScale(2, RoundingMode.HALF_UP);
     }
 
     /**
@@ -56,10 +58,11 @@ public class ShoppingCart {
      * @param arrayList The list of items in the cart.
      * @return The total cost of items without sales taxes.
      */
-    public double calculateTotalWithoutSalesTaxes(ArrayList<Item> arrayList) {
-        double totalWithoutSalesTaxes = 0;
+    public BigDecimal calculateTotalWithoutSalesTaxes(ArrayList<Item> arrayList) {
+        BigDecimal totalWithoutSalesTaxes = BigDecimal.ZERO;
         for (Item item : arrayList) {
-            totalWithoutSalesTaxes += item.getPrice() * item.getQuantity();
+            BigDecimal itemTotal = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
+            totalWithoutSalesTaxes = totalWithoutSalesTaxes.add(itemTotal);
         }
         return roundTotalWithoutSalesTaxes(totalWithoutSalesTaxes);
     }
@@ -70,8 +73,11 @@ public class ShoppingCart {
      * @param salesTax The sales tax without rounding.
      * @return The sales tax rounded.
      */
-    public double roundSalesTax(double salesTax) {
-        return Math.ceil(salesTax * 20.0) / 20.0;
+    public BigDecimal roundSalesTax(BigDecimal salesTax) {
+        BigDecimal roundedSalesTax =
+                salesTax.divide(BigDecimal.valueOf(0.05), 0, RoundingMode.CEILING)
+                        .multiply(BigDecimal.valueOf(0.05));
+        return roundedSalesTax.setScale(2, RoundingMode.UNNECESSARY);
     }
 
     /**
@@ -94,8 +100,9 @@ public class ShoppingCart {
      * @param item The current item.
      * @return The sales tax.
      */
-    public double calculateSalesTax(int taxRate, Item item) {
-        return (taxRate * item.getPrice() * item.getQuantity()) / 100;
+    public BigDecimal calculateSalesTax(int taxRate, Item item) {
+        return (item.getPrice().multiply(BigDecimal.valueOf(taxRate))
+                .multiply(BigDecimal.valueOf(item.getQuantity()))).divide(BigDecimal.valueOf(100));
     }
 
     /**
@@ -104,12 +111,12 @@ public class ShoppingCart {
      * @param arrayList The list of items in the cart.
      * @return The total sales taxes.
      */
-    public double calculateSalesTaxes(ArrayList<Item> arrayList) {
-        double salesTaxes = 0;
+    public BigDecimal calculateSalesTaxes(ArrayList<Item> arrayList) {
+        BigDecimal salesTaxes = BigDecimal.ZERO;
         for (Item item : arrayList) {
             int taxRate = determineTaxRate(item);
-            double salesTax = calculateSalesTax(taxRate, item);
-            salesTaxes += roundSalesTax(salesTax);
+            BigDecimal salesTax = calculateSalesTax(taxRate, item);
+            salesTaxes = salesTaxes.add(roundSalesTax(salesTax));
         }
         return salesTaxes;
     }
