@@ -85,15 +85,45 @@ public class ShoppingCartTest {
     }
 
     @Test
+    public void testRoundSalesTax() {
+        assertEquals(1.85, shoppingCart1.roundSalesTax(1.82));
+        assertEquals(1.9, shoppingCart1.roundSalesTax(1.87));
+        assertEquals(1.7, shoppingCart1.roundSalesTax(1.699999999999999));
+    }
+
+    @Test
+    public void testDetermineTaxrate() {
+        Item normalItem = new Item(1, "item", 12.45, false, false);
+        assertEquals(10, shoppingCart1.determineTaxRate(normalItem));
+        Item importedNormalItem = new Item(1, "book", 12.45, true, false);
+        assertEquals(15, shoppingCart1.determineTaxRate(importedNormalItem));
+        Item excemptItem = new Item(1, "item", 12.45, false, true);
+        assertEquals(0, shoppingCart1.determineTaxRate(excemptItem));
+        Item importedExcemptItem = new Item(1, "book", 12.45, true, true);
+        assertEquals(5, shoppingCart1.determineTaxRate(importedExcemptItem));
+    }
+
+    @Test
+    public void testCalculateSalesTax() {
+        Item normalItem = new Item(1, "item", 14.99, false, false);
+        assertEquals(1.499, shoppingCart1.calculateSalesTax(10, normalItem));
+    }
+
+    /*
+     * Precision issues with floating point numbers.
+     */
+    private static final double DELTA = 1e-15;
+
+    @Test
     public void testCalculateSalesTaxes() {
         initializeShoppingCartWithTestDataOne();
-        assertEquals(1.50, shoppingCart1.calculateSalesTaxes(shoppingCart1.getItems()));
+        assertEquals(1.50, shoppingCart1.calculateSalesTaxes(shoppingCart1.getItems()), DELTA);
 
         initializeShoppingCartWithTestDataTwo();
-        assertEquals(7.65, shoppingCart2.calculateSalesTaxes(shoppingCart2.getItems()));
+        assertEquals(7.65, shoppingCart2.calculateSalesTaxes(shoppingCart2.getItems()), DELTA);
 
         initializeShoppingCartWithTestDataThree();
-        assertEquals(6.70, shoppingCart3.calculateSalesTaxes(shoppingCart3.getItems()));
+        assertEquals(6.70, shoppingCart3.calculateSalesTaxes(shoppingCart3.getItems()), DELTA);
     }
 
     @Test

@@ -43,6 +43,13 @@ public class ShoppingCart {
         return items;
     }
 
+    /*
+     * Round to 2 decimal places.
+     */
+    public double roundTotalWithoutSalesTaxes(double totalWithoutSalesTaxes) {
+        return Math.round(totalWithoutSalesTaxes * 100.0) / 100.0;
+    }
+
     /**
      * Calculates the total cost of items in the cart without including sales taxes.
      *
@@ -54,7 +61,41 @@ public class ShoppingCart {
         for (Item item : arrayList) {
             totalWithoutSalesTaxes += item.getPrice() * item.getQuantity();
         }
-        return Math.round(totalWithoutSalesTaxes * 100.0) / 100.0;
+        return roundTotalWithoutSalesTaxes(totalWithoutSalesTaxes);
+    }
+
+    /**
+     * Round up to the nearest of 0.05.
+     *
+     * @param salesTax The sales tax without rounding.
+     * @return The sales tax rounded.
+     */
+    public double roundSalesTax(double salesTax) {
+        return Math.ceil(salesTax * 20.0) / 20.0;
+    }
+
+    /**
+     * Returns the taxrate, dependent on booleans from item.
+     * 
+     * 0% Taxrate on food, medicine and books. 10% Taxrate on normal goods. 5% Taxrate on imported
+     * goods, no exceptions.
+     * 
+     * @param item The current item.
+     * @return The taxrate.
+     */
+    public int determineTaxRate(Item item) {
+        return 0 + (item.isImported() ? 5 : 0) + (item.isExemptFromTaxes() ? 0 : 10);
+    }
+
+    /**
+     * Calculates the taxrate, dependent on item quanitiy and price.
+     * 
+     * @param taxRate The current taxrate for the current item.
+     * @param item The current item.
+     * @return The sales tax.
+     */
+    public double calculateSalesTax(int taxRate, Item item) {
+        return (taxRate * item.getPrice() * item.getQuantity()) / 100;
     }
 
     /**
@@ -66,11 +107,11 @@ public class ShoppingCart {
     public double calculateSalesTaxes(ArrayList<Item> arrayList) {
         double salesTaxes = 0;
         for (Item item : arrayList) {
-            double taxRate = 0 + (item.isImported() ? 5 : 0) + (item.isExemptFromTaxes() ? 0 : 10);
-            double toBeRounded = (taxRate * item.getPrice() * item.getQuantity()) / 100;
-            salesTaxes += toBeRounded;
+            int taxRate = determineTaxRate(item);
+            double salesTax = calculateSalesTax(taxRate, item);
+            salesTaxes += roundSalesTax(salesTax);
         }
-        return Math.ceil((salesTaxes) * 20.0) / 20.0;
+        return salesTaxes;
     }
 
     /**
