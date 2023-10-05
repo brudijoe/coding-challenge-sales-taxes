@@ -52,4 +52,16 @@ public class InputParserTest {
         assertEquals(BigDecimal.valueOf(10.00), item.getPrice());
         assertEquals(5, item.getTaxRate());
     }
+
+    @Test
+    public void testParseInputNormalItem() {
+        String input = "1 bottle of perfume at 23.49";
+        Item item = InputParser.parseInput(input);
+
+        assertNotNull(item);
+        assertEquals(1, item.getQuantity());
+        assertEquals("bottle of perfume", item.getName());
+        assertEquals(BigDecimal.valueOf(23.49), item.getPrice());
+        assertEquals(10, item.getTaxRate());
+    }
 }

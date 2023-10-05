@@ -41,7 +41,7 @@ public class InputParser {
     }
 
     private static String determineItemName(String itemDescription) {
-        String[] itemRegexPatterns = {"book", "music CD", "chocolate bar", "box of chocolates",
+        String[] itemRegexPatterns = {"book", "music cd", "chocolate bar", "box of chocolates",
                 "bottle of perfume", "packet of headache pills"};
 
         for (String patternStr : itemRegexPatterns) {

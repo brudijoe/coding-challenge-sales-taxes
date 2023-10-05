@@ -117,9 +117,9 @@ public class ShoppingCart {
         DecimalFormat df = new DecimalFormat("0.00", symbols);
 
         for (Item item : items) {
-            System.out
-                    .println(item.getQuantity() + " " + (item.getTaxRate() == 5 ? "imported " : "")
-                            + item.getName() + ": " + df.format(item.getPrice()));
+            System.out.println(item.getQuantity() + " "
+                    + (item.getTaxRate() == 5 || item.getTaxRate() == 15 ? "imported " : "")
+                    + item.getName() + ": " + df.format(item.getPrice()));
         }
         System.out.println("Sales Taxes: " + df.format(salesTaxes));
         System.out.println("Total: " + (df.format(total)));

@@ -18,7 +18,7 @@ public class SalesTaxApplication {
 
             System.out.println("Please type what you like to buy e.g. '1 imported book at 12.49'");
 
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().toLowerCase();
             System.out.println();
 
             Item newItem = InputParser.parseInput(input);

@@ -144,6 +144,17 @@ public class ShoppingCartTest {
                                 outputStreamCaptor.toString().trim());
         }
 
+        @Test
+        public void printShoppingCartReceiptWithImportedItem() {
+                initializeShoppingCartWithTestDataThree();
+                Item testItem = new Item(1, "bottle of perfume", BigDecimal.valueOf(49.99), 15);
+                ShoppingCart shoppingCart = new ShoppingCart();
+                shoppingCart.addItem(testItem);
+                shoppingCart.printShoppingCartReceipt();
+                assertEquals("1 imported bottle of perfume: 49.99\r\nSales Taxes: 7.50\r\nTotal: 57.49",
+                                outputStreamCaptor.toString().trim());
+        }
+
         @AfterEach
         public void tearDown() {
                 System.setOut(standardOut);
