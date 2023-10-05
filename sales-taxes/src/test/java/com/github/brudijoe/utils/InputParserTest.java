@@ -11,11 +11,11 @@ public class InputParserTest {
 
     @Test
     public void testParseInputValid() {
-        String input = "2 imported bottle of perfume at 27.99";
+        String input = "1 imported bottle of perfume at 27.99";
         Item item = InputParser.parseInput(input);
 
         assertNotNull(item);
-        assertEquals(2, item.getQuantity());
+        assertEquals(1, item.getQuantity());
         assertEquals("bottle of perfume", item.getName());
         assertEquals(BigDecimal.valueOf(27.99), item.getPrice());
         assertEquals(15, item.getTaxRate());
