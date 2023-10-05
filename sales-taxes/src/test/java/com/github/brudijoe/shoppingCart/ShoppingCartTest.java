@@ -65,7 +65,7 @@ public class ShoppingCartTest {
         }
 
         @Test
-        public void testAddItems() {
+        public void testSizeShoppingCarts() {
                 initializeShoppingCartWithTestDataOne();
                 assertEquals(3, shoppingCart1.getItems().size());
 

@@ -20,41 +20,58 @@ public class InputParser {
      * @return An Item object representing the parsed input, or null if the input format is invalid.
      */
     public static Item parseInput(String input) {
-        Pattern pattern = Pattern.compile("(^\\d+)(\\D+)(\\d+(\\.\\d+)?)");
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = createInputMatcher(input);
 
         if (matcher.matches()) {
             int quantity = Integer.parseInt(matcher.group(1));
             String itemDescription = matcher.group(2).toLowerCase();
             double itemPrice = Double.parseDouble(matcher.group(3));
+            String itemName = determineItemName(itemDescription);
+            int taxRate = calculateTaxRate(itemDescription, itemName);
 
-            String[] itemRegexPatterns = {"book", "music CD", "chocolate bar", "box of chocolates",
-                    "bottle of perfume", "packet of headache pills"};
+            return new Item(quantity, itemName, BigDecimal.valueOf(itemPrice), taxRate);
+        }
 
+        return null;
+    }
+
+    private static Matcher createInputMatcher(String input) {
+        Pattern pattern = Pattern.compile("(^\\d+)(\\D+)(\\d+(\\.\\d+)?)");
+        return pattern.matcher(input);
+    }
+
+    private static String determineItemName(String itemDescription) {
+        String[] itemRegexPatterns = {"book", "music CD", "chocolate bar", "box of chocolates",
+                "bottle of perfume", "packet of headache pills"};
+
+        for (String patternStr : itemRegexPatterns) {
+            if (itemDescription.contains(patternStr)) {
+                return patternStr;
+            }
+        }
+
+        return "";
+    }
+
+    private static int calculateTaxRate(String itemDescription, String itemName) {
+        int taxRate = 0;
+
+        if (itemDescription.contains("imported")) {
+            taxRate += 5;
+        }
+
+        if (!itemName.isEmpty()) {
             ArrayList<String> exemptFromTaxes = new ArrayList<>();
             exemptFromTaxes.add("book");
             exemptFromTaxes.add("chocolate bar");
             exemptFromTaxes.add("box of chocolates");
             exemptFromTaxes.add("packet of headache pills");
 
-            String itemName = "";
-            int taxRate = 0;
-
-            for (String patternStr : itemRegexPatterns) {
-                if (itemDescription.contains(patternStr)) {
-                    itemName = patternStr;
-                    taxRate = exemptFromTaxes.contains(itemName) ? 0 : 10;
-                    break;
-                }
+            if (!exemptFromTaxes.contains(itemName)) {
+                taxRate += 10;
             }
-
-            if (itemDescription.contains("imported")) {
-                taxRate += 5;
-            }
-
-            return new Item(quantity, itemName, BigDecimal.valueOf(itemPrice), taxRate);
         }
 
-        return null;
+        return taxRate;
     }
 }
